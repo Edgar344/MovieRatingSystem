@@ -1,4 +1,3 @@
-# MovieRatingSystem
 # Movie Rating System
 
 A Java program that collects 5 movie ratings (1–10), calculates the average, classifies user taste, and recommends genres.
