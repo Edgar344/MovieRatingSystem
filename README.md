@@ -3,5 +3,4 @@
 A Java program that collects 5 movie ratings (1–10), calculates the average, classifies user taste, and recommends genres.
 
 ## Reflection
-* **Learnings:** Learned how to use `Scanner` with input validation loops, array storage, and switch statements in GitHub Codespaces.
-* **Challenges:** Fixed infinite loops on bad input by clearing the buffer with `scanner.next()`.
+A nested if evaluates inner conditions only after its parent condition is true, whereas if-else branches check alternative paths immediately when the primary condition fails. Using a switch statement improves readability and performance over long if-else chains when checking a single variable against distinct values. The conditional operator simplifies decision-making by replacing multi-line conditional assignment blocks with a concise single-line expression. Finally, short-circuit evaluation—
