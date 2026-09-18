@@ -2,19 +2,28 @@ import java.util.Scanner;
 
 public class MovieRatingSystem {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
-        double[] ratings = new double[5];
-        double total = 0;
 
-        System.out.println("=== Movie Rating System ===");
+        // Step 1: User Input Handling
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
 
-        // Input and validation loop for 5 ratings
-        for (int i = 0; i < ratings.length; i++) {
-            double rating;
+        // Step 2: Accept and Validate Movie Ratings
+        String[] movies = new String[5];
+        int[] ratings = new int[5];
+
+        System.out.println("\nEnter the names of five movies you recently watched:");
+
+        for (int i = 0; i < 5; i++) {
+            System.out.print("Movie " + (i + 1) + ": ");
+            movies[i] = scanner.nextLine();
+
+            int rating;
             while (true) {
-                System.out.print("Enter rating #" + (i + 1) + " (1 to 10): ");
-                if (scanner.hasNextDouble()) {
-                    rating = scanner.nextDouble();
+                System.out.print("Rate " + movies[i] + " (1–10): ");
+                if (scanner.hasNextInt()) {
+                    rating = scanner.nextInt();
                     if (rating >= 1 && rating <= 10) {
                         break;
                     } else {
@@ -22,58 +31,104 @@ public class MovieRatingSystem {
                     }
                 } else {
                     System.out.println("Invalid input. Please enter a valid number.");
-                    scanner.next(); // Clear invalid token
+                    scanner.next(); // clear invalid token
                 }
             }
             ratings[i] = rating;
-            total += rating;
+            scanner.nextLine(); // clear buffer
         }
 
-        // Average calculation
-        double average = total / ratings.length;
+        // Step 3: Calculate the Average Rating
+        int sum = 0;
+        for (int r : ratings) {
+            sum += r;
+        }
+        double average = sum / 5.0;
+
         System.out.printf("\nAverage Rating: %.2f\n", average);
 
-        // Conditional classification using if-else and nested if
-        if (average >= 8.0) {
-            System.out.println("Taste Classification: Enthusiast");
-            if (average >= 9.5) {
-                System.out.println("Status: Master Critic!");
-            }
-        } else if (average >= 5.0 && average < 8.0) {
-            System.out.println("Taste Classification: Moderate Viewer");
+        // Step 4: Rating Classification (if-else)
+        if (average >= 9) {
+            System.out.println("You are a cinephile!");
+        } else if (average >= 7) {
+            System.out.println("You enjoy movies quite a bit.");
+        } else if (average >= 5) {
+            System.out.println("You have mixed feelings about movies.");
         } else {
-            System.out.println("Taste Classification: Harsh Critic");
+            System.out.println("You are a tough critic!");
         }
 
-        // Logic check using logical/conditional operators
-        boolean consistentHigh = (ratings[0] >= 7.0 && ratings[4] >= 7.0);
-        if (consistentHigh) {
-            System.out.println("Rating Consistency: Consistently positive feedback across reviews.");
+        // Step 5: Nested if Statements
+        boolean foundMasterpiece = false;
+        boolean foundBadMovie = false;
+
+        for (int r : ratings) {
+            if (r == 10) {
+                foundMasterpiece = true;
+            } else if (r < 4) {
+                foundBadMovie = true;
+            }
         }
 
-        // Switch statement for genre recommendation
-        System.out.println("\nSelect your favorite genre:");
-        System.out.println("1. Action");
-        System.out.println("2. Drama");
-        System.out.println("3. Comedy");
-        System.out.print("Enter choice (1-3): ");
+        if (foundMasterpiece) {
+            System.out.println("Wow! You found a masterpiece.");
+        } else {
+            if (foundBadMovie) {
+                System.out.println("That movie didn’t impress you much.");
+            }
+        }
 
-        int choice = scanner.hasNextInt() ? scanner.nextInt() : 0;
-        switch (choice) {
-            case 1:
-                System.out.println("Recommendation: Check out top-tier Action blockbusters!");
+        // Step 6: Logical Operators
+        boolean allHigh = true;
+        boolean anyVeryLow = false;
+
+        for (int r : ratings) {
+            if (r < 7) {
+                allHigh = false;
+            }
+            if (r < 3) {
+                anyVeryLow = true;
+            }
+        }
+
+        if (allHigh) {
+            System.out.println("You seem to enjoy most movies.");
+        } else if (anyVeryLow) {
+            System.out.println("You have strong opinions on movies!");
+        }
+
+        // Step 7: Switch Statement for Genre Preferences
+        System.out.print("\nEnter your favorite genre (Action, Comedy, Horror, Drama, Sci-Fi): ");
+        String genre = scanner.nextLine().toLowerCase();
+
+        switch (genre) {
+            case "action":
+                System.out.println("You love excitement and thrills!");
                 break;
-            case 2:
-                System.out.println("Recommendation: Explore award-winning Drama films!");
+            case "comedy":
+                System.out.println("You enjoy a good laugh.");
                 break;
-            case 3:
-                System.out.println("Recommendation: Enjoy classic Comedy hits!");
+            case "horror":
+                System.out.println("You have a taste for fear!");
+                break;
+            case "drama":
+                System.out.println("You appreciate deep storytelling.");
+                break;
+            case "sci-fi":
+                System.out.println("You love futuristic and imaginative worlds!");
                 break;
             default:
-                System.out.println("Recommendation: Explore general popular movies!");
-                break;
+                System.out.println("Interesting choice!");
         }
 
+        // Step 8: Conditional Operator Recommendation
+        String recommendation = genre.equals("sci-fi")
+                ? "Recommended Movie: Interstellar"
+                : "Recommended Movie: The Dark Knight";
+
+        System.out.println(recommendation);
+
+        System.out.println("\nThanks for using the Movie Rating System, " + name + "!");
         scanner.close();
     }
 }
